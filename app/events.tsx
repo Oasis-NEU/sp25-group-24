@@ -7,7 +7,12 @@ export default function Tab() {
       <Button
           title="X"
           color="#f194ff"
-          onPress={() => Alert.alert('Button with adjusted color pressed')}
+          onPress={() => Alert.alert('X pressed')}
+        />
+        <Button
+          title="Y"
+          color="#f194ff"
+          onPress={() => Alert.alert('Y pressed')}
         />
     </View>
   );

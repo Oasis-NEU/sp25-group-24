@@ -5,12 +5,12 @@ export default function TabLayout() {
   return (
     <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
       <Tabs.Screen
-        name="index"
+        name="events"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+          title: 'Events',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="anchor" color={color} />,
         }}
-      />
+        />
       <Tabs.Screen
         name="profile"
         options={{
@@ -23,13 +23,6 @@ export default function TabLayout() {
         options={{
           title: 'Calander',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="calendar" color={color} />,
-        }}
-        />
-        <Tabs.Screen
-        name="events"
-        options={{
-          title: 'Events',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="plus" color={color} />,
         }}
         />
         <Tabs.Screen
