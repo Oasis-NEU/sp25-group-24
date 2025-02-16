@@ -1,7 +1,75 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Text } from 'react-native';
+import { supabase } from '@/supabase';
 
 export default function Events() {
+  const [events, setEvents] = useState<any>([])
+  const [userEvents, setUserEvents] = useState<any>([])
+
+ async function getAllEvents() {
+  const {data, error} = await supabase
+  .from('Events')
+  .select('*')
+
+  if(error) {
+    return "Couldn't fetch events."
+  }
+
+  setEvents(data);
+  return events
+ }
+
+ async function getUserEvents(id: number) {
+  const{data, error} = await supabase
+  .from("SignedUp")
+  .select("*")
+  .eq("user_id", id)
+
+  if(error) {
+    return "No Events. Go to event page to sign up!"
+  }
+
+  setUserEvents(data)
+  return userEvents
+ }
+
+
+ useEffect(function() {
+  async function getAllEvents() {
+    const {data, error} = await supabase
+    .from('Events')
+    .select('*')
+  
+    if(error) {
+      return "Couldn't fetch events."
+    }
+  
+    setEvents(data);
+    return events
+   }
+  
+   async function getUserEvents(id: number) {
+    const{data, error} = await supabase
+    .from("SignedUp")
+    .select("*")
+    .eq("user_id", id)
+  
+    if(error) {
+      return "No Events. Go to event page to sign up!"
+    }
+  
+    setUserEvents(data)
+    return userEvents
+   }
+
+
+   // add this to profile later getUserEvents()
+   getAllEvents().catch((err) => console.error(err))
+   console.log(events)
+ }, [])
+
+
   return (
     <View style={styles.container}>
       <View style={styles.rectangle}>
