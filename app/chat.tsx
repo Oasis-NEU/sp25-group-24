@@ -5,6 +5,15 @@ export default function Tab() {
   return (
     <View style={styles.container}>
       <MessageCard />
+      <MessageCard />
+      <MessageCard />
+      <MessageCard />
+      <MessageCard />
+      <MessageCard />
+      <MessageCard />
+      <MessageCard />
+      <MessageCard />
+      <MessageCard />
     </View>
   );
 }

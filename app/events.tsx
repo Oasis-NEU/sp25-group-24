@@ -10,14 +10,14 @@ export default function Events() {
             style={[styles.button, styles.yButton]} 
             onPress={() => Alert.alert('Y pressed')}
           >
-            <Text style={styles.buttonText}>Y</Text>
+            <Text style={styles.buttonText}>Join!</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
             style={[styles.button, styles.xButton]} 
             onPress={() => Alert.alert('X pressed')}
           >
-            <Text style={styles.buttonText}>X</Text>
+            <Text style={styles.buttonText}>Not Interested</Text>
           </TouchableOpacity>
         </View>
       </View>
