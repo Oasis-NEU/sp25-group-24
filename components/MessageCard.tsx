@@ -3,24 +3,27 @@ import React from 'react'
 import { moderateScale, moderateVerticalScale, scale, verticalScale } from 'react-native-size-matters';
 
 
-const MessageCard = () => {
+const MessageCard = ({name, message, time, count, image}:any) => {
   return (
     // TouchableOpacity allows the user to press the things below
     // Button contains left and right container for everything, can be use as TouchableOpacity(button)
     <TouchableOpacity style ={styles.button}> 
       <View style ={styles.leftContainer}>
-        <Image src='../assets/images/react-logo.png' style={styles.image}/>
+        <Image source= {image} style={styles.image}/>
         <View>
-            <Text style={styles.name}>App Member Name</Text>
-            <Text style={styles.message}>Hi, how are you?</Text>
+            <Text style={styles.name}>{name}</Text>
+            <Text style={styles.message}>{message}</Text>
         </View>
       </View>
 
       <View style ={styles.rightContainer}>
-        <Text style={styles.time}>12:00 pm</Text> 
-        <View style={styles.messageCountContainer}>
-            <Text style={styles.messageCount}>1</Text>
-        </View>
+        <Text style={styles.time}>{time}</Text> 
+        {!!count && ( // if using !! indicates that if count is not 0, then message countainer 
+                      // and message Count will show. otherwise it will not
+          <View style={styles.messageCountContainer}>
+            <Text style={styles.messageCount}>{count}</Text>
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   )
