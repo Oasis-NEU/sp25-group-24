@@ -1,8 +1,14 @@
+// This is the Chat List Page
+
 import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
 import MessageCard from '../components/MessageCard';
+import { useRouter } from 'expo-router'; // This is so we can go from chat to chat room
 
-export default function Tab() {
-  // The user's data
+
+export default function Chat(): JSX.Element { // export this chat page, also Chat() is a function = independent
+  const router = useRouter();
+  
+    // The user's data
   const data = [
     {
       image: require('../assets/images/react-logo.png'), // local image format
@@ -27,11 +33,30 @@ export default function Tab() {
     },
   ];
 
+  const openchatRoom = (Chat: { // open chat room from chat file. chat file have (image....) params
+    image: any;
+    name: string;
+    message: string;
+    messageCount: number;
+    time: string;
+  }) => {
+    router.push({
+      pathname: "/chatRoom",
+      params: {
+        name: Chat.name,
+        image: Chat.image,
+        message: Chat.message,
+        time: Chat.time,
+      },
+    });
+  };
+
+
   return (
     <View style={{flex: 1}}>
       <FlatList  // container for data
         data= {data} 
-        keyExtractor={(item, index) => index.toString()} // Item is the current object, index is it's position
+        keyExtractor={(item, index) => index.toString()} // Item is the current value (chat data), index is it's position
         renderItem={({item}) => ( // renderItem tells Flatlist how to style each data
           <MessageCard 
             name ={item.name} 
@@ -39,6 +64,7 @@ export default function Tab() {
             image= {item.image} 
             time={item.time} 
             count= {item.messageCount}
+            onPress={() => openchatRoom(item)} // when user tap on chat, open chat room, iten is the current chat data
           />
         )} 
       />

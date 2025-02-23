@@ -1,13 +1,15 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
+// This is the components inside the chat List or chat.tsx file
+
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native'
 import React from 'react'
 import { moderateScale, moderateVerticalScale, scale, verticalScale } from 'react-native-size-matters';
 
 
-const MessageCard = ({name, message, time, count, image}:any) => {
+const MessageCard = ({name, message, time, count, image, onPress}:any) => {
   return (
     // TouchableOpacity allows the user to press the things below
     // Button contains left and right container for everything, can be use as TouchableOpacity(button)
-    <TouchableOpacity style ={styles.button}> 
+    <TouchableOpacity onPress ={onPress} style ={styles.button}> 
       <View style ={styles.leftContainer}>
         <Image source= {image} style={styles.image}/>
         <View>
@@ -31,6 +33,18 @@ const MessageCard = ({name, message, time, count, image}:any) => {
 
 // CSS file
 
+const SearchBar = () => {
+  return (
+    <View style={styles.searchContainer}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search..."
+        placeholderTextColor="#999"
+      />
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   // This is the container that have all of the chat window
   // Have left and right container
@@ -45,7 +59,10 @@ const styles = StyleSheet.create({
       height: "100%",
       width: "320%",
       backgroundColor: "#F8FAFF",
-      boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25",
+      shadowColor: "#000",
+      shadowOpacity: 0.25,
+      shadowRadius: 2,
+      elevation: 2,
     },
 
     // Below are the styling for name, image, message, etc...
@@ -98,7 +115,23 @@ const styles = StyleSheet.create({
     gap: verticalScale(7),
 
     },
-})
+
+    searchContainer: {
+      backgroundColor: "#EEE",
+      borderRadius: 20,
+      padding: 10,
+      marginHorizontal: 20,
+      marginVertical: 10,
+    },
+
+    searchInput: {
+      fontSize: moderateScale(14),
+      color: "black",
+    },
+});
 
 
 export default MessageCard
+
+// working on a search bar in chat room. Status: in progress....
+// working on the chat room. Status: in progress...
