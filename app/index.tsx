@@ -1,7 +1,92 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Text } from 'react-native';
+import { supabase } from '@/supabase';
 
 export default function Events() {
+  const [events, setEvents] = useState<any>([])
+  const [userEvents, setUserEvents] = useState<any>([])
+
+
+ useEffect(function() {
+  async function getAllEvents() {
+    const {data, error} = await supabase
+    .from('Events')
+    .select('*')
+  
+    if(error) {
+      return "Couldn't fetch events."
+    }
+  
+    setEvents(data);
+    return events
+   }
+  
+   async function getUserEvents(id: number) {
+    const{data, error} = await supabase
+    .from("SignedUp")
+    .select("*")
+    .eq("user_id", id)
+  
+    if(error) {
+      return "No Events. Go to event page to sign up!"
+    }
+  
+    setUserEvents(data)
+   }
+
+
+   // add this to profile later getUserEvents()
+   getAllEvents().catch((err) => console.error(err))
+   console.log("EVENTS LIST:", events)
+ }, [])
+
+ async function insertEvents (name: string, date: string, time: string, description: string, image_link: string, user_id: number) {
+  const{ data, error } = await supabase
+    .from("Events")
+    .insert({
+      name: name,
+      date: date,
+      time: time,
+      description: description,
+      image_link: image_link
+    })
+    .select()
+    .single()
+
+    if (error) {
+      console.error(error.message)
+    }
+
+    console.log("Event Inserted", data)
+
+
+    const{ data: SignedUpData, error: SignedUpError} = await supabase
+    .from("SignedUp")
+    .insert({
+      user_id: user_id,
+      event_id: data.id,
+      is_host: true
+    })
+
+    if (SignedUpError) {
+      console.error(SignedUpError.message)
+    } 
+
+    console.log("Added to SignedUp")
+
+ }
+
+ async function deleteEvents (id: number) {
+  const response = await supabase
+    .from("Events")
+    .delete()
+    .eq('id', 1)
+ }
+
+ insertEvents("test", "10", "22", "test desv", "aaaaaa", 4)
+
+
   return (
     <View style={styles.container}>
       <View style={styles.rectangle}>
