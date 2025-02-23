@@ -30,6 +30,9 @@ export default function TabLayout() {
         options={{
           title: 'Chat',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="circle" color={color} />,
+          headerTitleStyle: {fontSize: 30,
+            fontWeight: "bold",
+          }
         }}
         />
     </Tabs>

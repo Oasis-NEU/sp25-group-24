@@ -41,6 +41,11 @@ const styles = StyleSheet.create({
       paddingHorizontal: scale(20),
       paddingVertical: verticalScale(10),
       gap: scale(40),
+      position: "relative",
+      height: "100%",
+      width: "320%",
+      backgroundColor: "#F8FAFF",
+      boxShadow: "0px 0px 2px rgba(0, 0, 0, 0.25",
     },
 
     // Below are the styling for name, image, message, etc...
