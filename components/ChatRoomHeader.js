@@ -1,12 +1,18 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity} from 'react-native';
+import { useRouter } from 'expo-router';
+import { ArrowLeft} from "lucide-react-native";
 
-const ChatRoomHeader = () => {
+
+export default function ChatRoomHeader({name}) {
+    const router = useRouter();
+
   return (
-    <View>
-      <Text>ChatRoomHeader</Text>
-    </View>
-  )
-}
+    <View style={{ flexDirection: "row", alignItems: "center", padding: 15, backgroundColor: "#fff", elevation: 3}}>
+        <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 10}}>
+            <ArrowLeft size={24} color="black" />
+        </TouchableOpacity>
 
-export default ChatRoomHeader
+        <Text style={{ fonstSize: 18, fontWeight: "bold"}}>{name}</Text>
+    </View>
+  );
+}
