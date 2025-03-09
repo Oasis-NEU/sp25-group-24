@@ -53,16 +53,16 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: "space-between",
       paddingHorizontal: scale(20),
-      paddingVertical: verticalScale(10),
-      gap: scale(40),
+      paddingVertical: verticalScale(20),
+      gap: scale(20),
       position: "relative",
-      height: "100%",
-      width: "320%",
+      width: "100%",
       backgroundColor: "#F8FAFF",
       shadowColor: "#000",
       shadowOpacity: 0.25,
       shadowRadius: 2,
       elevation: 2,
+      
     },
 
     // Below are the styling for name, image, message, etc...
@@ -82,14 +82,14 @@ const styles = StyleSheet.create({
       fontWeight: "500",
     },
     time:{
-      color: "blue",
+      color: "#8B4290",
       fontWeight: "bold",
       fontSize: moderateScale(12),
     },
 
     // this the little bubble with how many messages you have with messageCount inside it
     messageCountContainer:{
-      backgroundColor: "navy",
+      backgroundColor: "#8B4280",
       width: moderateScale(22),
       height: moderateScale(22),
       borderRadius: moderateScale(22),
