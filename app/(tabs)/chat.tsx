@@ -11,7 +11,7 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
     // The user's data
   const data = [
     {
-      image: require('../assets/images/react-logo.png'), // local image format
+      image: require('../../assets/images/react-logo.png'), // local image format
       name:"App member name 1",
       message: "Hi, how are you",
       time: "12:00 pm",
@@ -25,14 +25,14 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
       messageCount: 3,
     },
     {
-      image: require('../assets/images/react-logo.png'),
+      image: require('../../assets/images/react-logo.png'),
       name:"App member name 3",
       message: "Yo open your phone",
       time: "12:00 pm",
       messageCount: 38,
     },
     {
-      image: require('../assets/images/react-logo.png'),
+      image: require('../../assets/images/react-logo.png'),
       name:"App member name 4",
       message: "Yo open your phone",
       time: "12:00 am",
@@ -46,7 +46,7 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
       messageCount: 9,
     },
     {
-      image: require('../assets/images/react-logo.png'),
+      image: require('../../assets/images/react-logo.png'),
       name:"App member name 6",
       message: "Yo open your phone",
       time: "12:00 pm",
@@ -60,7 +60,7 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
       messageCount: 77,
     },
     {
-      image: require('../assets/images/react-logo.png'),
+      image: require('../../assets/images/react-logo.png'),
       name:"App member name 8",
       message: "Yo open your phone",
       time: "12:00 pm",
