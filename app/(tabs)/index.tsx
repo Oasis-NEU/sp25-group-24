@@ -1,119 +1,120 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert, Text } from 'react-native';
 import { supabase } from '@/supabase';
 
 export default function Events() {
-  const [events, setEvents] = useState<any>([])
-  const [userEvents, setUserEvents] = useState<any>([])
+  const [events, setEvents] = useState<any[]>([]);
+  const [currentEventIndex, setCurrentEventIndex] = useState(0);
+  const user_id = 4; // Replace this with the actual user ID from auth
 
-
- useEffect(function() {
-  async function getAllEvents() {
-    const {data, error} = await supabase
-    .from('Events')
-    .select('*')
-  
-    if(error) {
-      return "Couldn't fetch events."
-    }
-  
-    setEvents(data);
-    return events
-   }
-  
-   async function getUserEvents(id: number) {
-    const{data, error} = await supabase
-    .from("SignedUp")
-    .select("*")
-    .eq("user_id", id)
-  
-    if(error) {
-      return "No Events. Go to event page to sign up!"
-    }
-  
-    setUserEvents(data)
-   }
-
-
-   // add this to profile later getUserEvents()
-   getAllEvents().catch((err) => console.error(err))
-   console.log("EVENTS LIST:", events)
- }, [])
-
- async function insertEvents (name: string, date: string, time: string, description: string, image_link: string, user_id: number) {
-  const{ data, error } = await supabase
-    .from("Events")
-    .insert({
-      name: name,
-      date: date,
-      time: time,
-      description: description,
-      image_link: image_link
-    })
-    .select()
-    .single()
-
-    if (error) {
-      console.error(error.message)
+  useEffect(() => {
+    async function getAllEvents() {
+      const { data, error } = await supabase.from('Events').select('*');
+      if (error) {
+        console.error("Couldn't fetch events:", error);
+        return;
+      }
+      setEvents(data);
     }
 
-    console.log("Event Inserted", data)
+    async function insertEvents (name: string, date: string, time: string, description: string, image_link: string, user_id: number) {
+      const{ data, error } = await supabase
+        .from("Events")
+        .insert({
+          name: name,
+          date: date,
+          time: time,
+          description: description,
+          image_link: image_link
+        })
+        .select()
+        .single()
+    
+        if (error) {
+          console.error(error.message)
+        }
+    
+        console.log("Event Inserted", data)
+    
+    
+        const{ data: SignedUpData, error: SignedUpError} = await supabase
+        .from("SignedUp")
+        .insert({
+          user_id: user_id,
+          event_id: data.id,
+          is_host: true
+        })
+    
+        if (SignedUpError) {
+          console.error(SignedUpError.message)
+        }
+    
+        console.log("Added to SignedUp")
+    
+     }
+    
+    getAllEvents();
+  }, []);
 
+  async function joinEvent(event_id: number) {
+   const joinedEvents = [];
+   joinedEvents.push({currentEvent})
+    goToNextEvent();
+    console.log(joinedEvents)
+  }
 
-    const{ data: SignedUpData, error: SignedUpError} = await supabase
-    .from("SignedUp")
-    .insert({
-      user_id: user_id,
-      event_id: data.id,
-      is_host: true
-    })
+  function goToNextEvent() {
+    if (currentEventIndex < events.length - 1) {
+      setCurrentEventIndex(currentEventIndex + 1);
+    } else {
+      setCurrentEventIndex(-1); 
+    }
+  }
+  
 
-    if (SignedUpError) {
-      console.error(SignedUpError.message)
-    } 
+  if (events.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text>No events available.</Text>
+      </View>
+    );
+  }
 
-    console.log("Added to SignedUp")
-
- }
-
- async function deleteEvents (id: number) {
-  const response = await supabase
-    .from("Events")
-    .delete()
-    .eq('id', 1)
- }
-
- insertEvents("test", "10", "22", "test desv", "aaaaaa", 4)
+  const currentEvent =
+  currentEventIndex === -1 || events.length === 0
+    ? { name: "No more events available", description: "", image_link: "" }
+    : events[currentEventIndex];
 
 
   return (
     <View style={styles.container}>
       <View style={styles.rectangle}>
-      <View style={styles.topSection}>
-      <Text style={styles.title}>Event Title</Text>
-      <View style={styles.imagePlaceholder}>
-          <Text style={styles.imageText}>Image Placeholder</Text>
-        </View>
-        <Text style={styles.description}>This is the event description.</Text>
+        <View style={styles.topSection}>
+          <Text style={styles.title}>{currentEvent.name}</Text>
+          <View style={styles.imagePlaceholder}>
+            <Text style={styles.imageText}>{currentEvent.image_link || "No Image"}</Text>
+          </View>
+          <Text style={styles.description}>{currentEvent.description}</Text>
         </View>
 
         <View style={styles.buttonContainer}>
-        
-          <TouchableOpacity 
-            style={[styles.button, styles.yButton]} 
-            onPress={() => Alert.alert('Y pressed')}
-          >
-            <Text style={styles.buttonText}>Join!</Text>
-          </TouchableOpacity>
+  <TouchableOpacity
+    style={[styles.button, styles.yButton, currentEventIndex === -1 && styles.disabledButton]}
+    onPress={() => currentEventIndex !== -1 && joinEvent(currentEvent.id)}
+    disabled={currentEventIndex === -1}
+  >
+    <Text style={styles.buttonText}>Join!</Text>
+  </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={[styles.button, styles.xButton]} 
-            onPress={() => Alert.alert('X pressed')}
-          >
-            <Text style={styles.buttonText}>Not Interested</Text>
-          </TouchableOpacity>
-        </View>
+  <TouchableOpacity
+    style={[styles.button, styles.xButton, currentEventIndex === -1 && styles.disabledButton]}
+    onPress={() => currentEventIndex !== -1 && goToNextEvent()}
+    disabled={currentEventIndex === -1}
+  >
+    <Text style={styles.buttonText}>Not Interested</Text>
+  </TouchableOpacity>
+</View>
+
       </View>
     </View>
   );
@@ -173,15 +174,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   yButton: {
-    backgroundColor: '#4CAF50', 
+    backgroundColor: '#4CAF50',
   },
   xButton: {
-    backgroundColor: '#FF5733', 
+    backgroundColor: '#FF5733',
   },
   buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
   },
+  disabledButton: {
+    backgroundColor: 'grey', 
+    opacity: 0.5, 
+  }
 });
-
