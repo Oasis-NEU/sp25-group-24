@@ -11,60 +11,60 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
     // The user's data
   const data = [
     {
-      image: require('../../assets/images/react-logo.png'), // local image format
-      name:"App member name 1",
-      message: "Hi, how are you",
-      time: "12:00 pm",
-      messageCount: 5,
-    },
-    { // image from public link
-      image: { uri: 'https://th.bing.com/th/id/OIP.6vzIcJQnHVyA2HMmlbW1mAHaHa?w=175&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
-      name:"App member name 2",
-      message: "Hi, how are you",
-      time: "Yesterday",
-      messageCount: 3,
-    },
-    {
-      image: require('../../assets/images/react-logo.png'),
-      name:"App member name 3",
-      message: "Yo open your phone",
-      time: "12:00 pm",
-      messageCount: 38,
-    },
-    {
-      image: require('../../assets/images/react-logo.png'),
-      name:"App member name 4",
-      message: "Yo open your phone",
-      time: "12:00 am",
+      image: { uri: 'https://th.bing.com/th/id/OIP.WnvHipa3xxOaxBmprw0JigAAAA?w=267&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'}, // local image format
+      name:"Ethan Carter",
+      message: "",
+      time: "Start messaging",
       messageCount: 0,
     },
     { // image from public link
-      image: { uri: 'https://th.bing.com/th/id/OIP.6vzIcJQnHVyA2HMmlbW1mAHaHa?w=175&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
-      name:"App member name 5",
-      message: "Hi, how are you",
-      time: "Yesterday",
-      messageCount: 9,
+      image: { uri: 'https://th.bing.com/th/id/OIP.M0v8e25yKu6-jVKdTBxJ6QHaI3?w=186&h=223&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
+      name:"Sophia Reed",
+      message: "Good morning!",
+      time: "08:00 AM",
+      messageCount: 1,
     },
     {
-      image: require('../../assets/images/react-logo.png'),
-      name:"App member name 6",
-      message: "Yo open your phone",
-      time: "12:00 pm",
-      messageCount: 218,
+      image: {uri: 'https://th.bing.com/th/id/OIP.LJsJhXuF17NsxrX9yqGUWgHaJ4?w=216&h=288&c=8&rs=1&qlt=90&o=6&dpr=1.5&pid=3.1&rm=2'},
+      name:"Olivia Hayes",
+      message: "So excited for this! ",
+      time: "09:30 AM",
+      messageCount: 3,
+    },
+    {
+      image: { uri: 'https://th.bing.com/th/id/OIP.WbmglHBFQJtHJwLnteidUgHaK2?w=138&h=203&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
+      name:"Emma Louis",
+      message: "Bonjour! T-es pret?",
+      time: "11:15 AM",
+      messageCount: 1,
     },
     { // image from public link
-      image: { uri: 'https://th.bing.com/th/id/OIP.6vzIcJQnHVyA2HMmlbW1mAHaHa?w=175&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
-      name:"App member name 7",
-      message: "Hi, how are you",
-      time: "Yesterday",
-      messageCount: 77,
+      image: { uri: 'https://th.bing.com/th/id/OIP.bs9UQaRNCKIjqHUI38z6cgAAAA?w=111&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
+      name:"Mason Turner",
+      message: "Meeting in 10 min",
+      time: "1:35 PM",
+      messageCount: 2,
     },
     {
-      image: require('../../assets/images/react-logo.png'),
-      name:"App member name 8",
-      message: "Yo open your phone",
-      time: "12:00 pm",
+      image: {uri: 'https://th.bing.com/th/id/OIP.-VXmJCliGcRxA6LOsnbXhAHaFM?w=247&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
+      name:"Liam Brooks",
+      message: "Did you go last time?",
+      time: "3:30 PM",
+      messageCount: 4,
+    },
+    { // image from public link
+      image: { uri: 'https://th.bing.com/th/id/OIP.0Gc5yqi42dFFLQP9FiUhEQHaFc?w=231&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
+      name:"Lucas Bennett",
+      message: "Hi, how are you",
+      time: "Yesterday",
       messageCount: 2,
+    },
+    {
+      image: {uri: 'https://th.bing.com/th/id/OIP.iC05DjIJjlRSRv0iy82pmwHaHa?w=186&h=186&c=7&r=0&o=5&dpr=1.5&pid=1.7'},
+      name:"Charlotte Adams",
+      message: "Ready for today?",
+      time: "Yesterday",
+      messageCount: 5,
     },
   ];
 
@@ -80,7 +80,7 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
       pathname: "/chatRoom",
       params: {
         name: Chat.name,
-        image: JSON.stringify(Chat.image), // change image from an object to a string
+        image: Chat.image.uri, // change image from an object to a string
         message: Chat.message,
         time: Chat.time,
       },
