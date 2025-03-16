@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert, Text} from 'react-native';
+import { Image } from 'expo-image';
 import { supabase } from '@/supabase';
 
 export default function Events() {
@@ -15,6 +16,7 @@ export default function Events() {
         return;
       }
       setEvents(data);
+  
     }
 
     async function insertEvents (name: string, date: string, time: string, description: string, image_link: string, user_id: number) {
@@ -54,6 +56,7 @@ export default function Events() {
      }
     
     getAllEvents();
+    console.log("Events" + events)
   }, []);
 
   async function joinEvent(event_id: number) {
@@ -91,8 +94,12 @@ export default function Events() {
       <View style={styles.rectangle}>
         <View style={styles.topSection}>
           <Text style={styles.title}>{currentEvent.name}</Text>
-          <View style={styles.imagePlaceholder}>
-            <Text style={styles.imageText}>{currentEvent.image_link || "No Image"}</Text>
+          <View>
+          <Image
+  source={{ uri: currentEvent.image_link }}
+  style={{ width: 200, height: 200 }}
+/>
+
           </View>
           <Text style={styles.description}>{currentEvent.description}</Text>
         </View>
@@ -137,10 +144,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  imagePlaceholder: {
-    width: '100%',
-    height: 150,
-    backgroundColor: '#d3d3d3',
+  image: {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
