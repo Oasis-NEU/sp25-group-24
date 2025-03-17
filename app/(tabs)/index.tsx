@@ -85,7 +85,7 @@ export default function Events() {
 
   const currentEvent =
   currentEventIndex === -1 || events.length === 0
-    ? { name: "No more events available", description: "", image_link: "" }
+    ? { name: "No more events available", description: "", image_link: "https://as2.ftcdn.net/v2/jpg/00/86/18/25/1000_F_86182546_Gy93hyoCFXmK0JlXYnOekv05v66MUmfb.jpg" }
     : events[currentEventIndex];
 
 
