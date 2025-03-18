@@ -257,15 +257,15 @@ const styles = StyleSheet.create({
     bottom: 20, 
   },
   button: {
-    paddingVertical: 1,  
-    paddingHorizontal: 20,
+    paddingVertical: 10,  
+    paddingHorizontal: 10,
     borderRadius: 5,
     width: '45%',  
     justifyContent: 'center',  
     alignItems: 'center',  
   },
   buttonText: {
-    fontSize: 14,  
+    fontSize: 17,  
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',  
