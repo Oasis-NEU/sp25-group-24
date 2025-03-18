@@ -5,14 +5,21 @@ export default function TabLayout() {
   return (
     <Tabs  // style for the tab headers
       screenOptions={{
-        tabBarActiveTintColor: 'blue',
+        tabBarActiveTintColor: '#ffffff',
+        tabBarInactiveTintColor: '#000000',
         headerStyle: {
-          backgroundColor: "#BB9DBB",
+          backgroundColor: '#CC0000',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
           fontSize: 30,
           fontWeight: 'bold',
+        },
+        tabBarStyle: {
+          backgroundColor: '#CC0000',
+          borderTopWidth: 0,
+          height: 80,
+          paddindBottom: 10,
         }
       }}
     >
@@ -20,7 +27,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Events',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="anchor" color={color} />,
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="list" color={color} />,
         }}
         />
       <Tabs.Screen

@@ -84,7 +84,6 @@ export default function Events() {
     .eq('id', 1)
  }
 
- insertEvents("test", "10", "22", "test desv", "aaaaaa", 4)
 
 
   return (
