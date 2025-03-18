@@ -107,10 +107,10 @@ export default function Events() {
         <View style={styles.topSection}>
           <Text style={styles.title}>{currentEvent.name}</Text>
           <Image
-      source={{ uri: currentEvent.image_link }}  // Ensure this URL is correct and public
-      style={styles.eventImage} 
-      resizeMode="cover"  // Adjust the image display as needed
-    />
+  source={{ uri: currentEvent.image_link }}
+  style={styles.eventImage}
+  resizeMode="contain"
+/>
           <Text style={styles.description}>{currentEvent.description}</Text>
         </View>
         <View style={styles.buttonContainer}>
@@ -224,12 +224,14 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     width: 300,
-    height: 500,
+    height: 500,  // Fixed height to keep the rectangle from growing too large
     backgroundColor: 'grey',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
     justifyContent: 'space-between',
+    overflow: 'hidden',  // Prevent content from overflowing
+    flexDirection: 'column',  // Ensures content is arranged vertically
   },
   title: {
     fontSize: 24,
@@ -242,26 +244,36 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 20,
+    paddingHorizontal: 10,  // Add padding to prevent text from touching the sides
+    flexShrink: 1, // Ensures the text shrinks to fit the available space
+    flexGrow: 1,   // Prevents the text from expanding too much
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '100%',  // Make sure the buttons take up full width inside the rectangle
+    position: 'absolute', // Position the buttons absolutely within the rectangle
+    bottom: 20,  // 20px from the bottom of the rectangle
   },
   button: {
-    paddingVertical: 10,
+    paddingVertical: 1,  // Reduced vertical padding to make the buttons shorter
     paddingHorizontal: 20,
     borderRadius: 5,
+    width: '45%',  // Ensure buttons are not too wide and fit inside the container
+    justifyContent: 'center',  // Vertically center the text
+    alignItems: 'center',  // Horizontally center the text
+  },
+  buttonText: {
+    fontSize: 14,  // Smaller font size for the button text
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',  // Ensures the text is centered horizontally
   },
   yButton: {
     backgroundColor: '#4CAF50',
   },
   xButton: {
     backgroundColor: '#FF5733',
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
   },
   modalOverlay: {
     flex: 1,
@@ -297,6 +309,8 @@ const styles = StyleSheet.create({
   topSection: {
     marginBottom: 20,
     alignItems: 'center',
+    flexGrow: 1,  // Allow this section to take up remaining space
+    flexShrink: 0,  // Prevent it from shrinking too much
   },
   disabledButton: {
     backgroundColor: '#d3d3d3', // Gray background for disabled buttons
@@ -315,4 +329,3 @@ const styles = StyleSheet.create({
     borderRadius: 10, // Optional: rounded corners
   },
 });
-
