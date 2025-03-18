@@ -224,50 +224,51 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     width: 300,
-    height: 500,  // Fixed height to keep the rectangle from growing too large
+    height: 500, 
     backgroundColor: 'grey',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
     justifyContent: 'space-between',
-    overflow: 'hidden',  // Prevent content from overflowing
-    flexDirection: 'column',  // Ensures content is arranged vertically
+    overflow: 'hidden',  
+    flexDirection: 'column',  
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
     marginBottom: 10,
+    textAlign: 'center',  
   },
   description: {
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
     marginBottom: 20,
-    paddingHorizontal: 10,  // Add padding to prevent text from touching the sides
-    flexShrink: 1, // Ensures the text shrinks to fit the available space
-    flexGrow: 1,   // Prevents the text from expanding too much
+    paddingHorizontal: 10, 
+    flexShrink: 1, 
+    flexGrow: 1,  
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',  // Make sure the buttons take up full width inside the rectangle
-    position: 'absolute', // Position the buttons absolutely within the rectangle
-    bottom: 20,  // 20px from the bottom of the rectangle
+    width: '100%', 
+    position: 'absolute', 
+    bottom: 20, 
   },
   button: {
-    paddingVertical: 1,  // Reduced vertical padding to make the buttons shorter
+    paddingVertical: 1,  
     paddingHorizontal: 20,
     borderRadius: 5,
-    width: '45%',  // Ensure buttons are not too wide and fit inside the container
-    justifyContent: 'center',  // Vertically center the text
-    alignItems: 'center',  // Horizontally center the text
+    width: '45%',  
+    justifyContent: 'center',  
+    alignItems: 'center',  
   },
   buttonText: {
-    fontSize: 14,  // Smaller font size for the button text
+    fontSize: 14,  
     fontWeight: 'bold',
     color: 'white',
-    textAlign: 'center',  // Ensures the text is centered horizontally
+    textAlign: 'center',  
   },
   yButton: {
     backgroundColor: '#4CAF50',
@@ -309,23 +310,23 @@ const styles = StyleSheet.create({
   topSection: {
     marginBottom: 20,
     alignItems: 'center',
-    flexGrow: 1,  // Allow this section to take up remaining space
-    flexShrink: 0,  // Prevent it from shrinking too much
+    flexGrow: 1,  
+    flexShrink: 0,  
   },
   disabledButton: {
-    backgroundColor: '#d3d3d3', // Gray background for disabled buttons
-    opacity: 0.6, // Lower opacity to indicate it's disabled
+    backgroundColor: '#d3d3d3', 
+    opacity: 0.6, 
   },
   inputLabel: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginVertical: 5, // Add some space between the label and input
-    color: '#333', // A darker color for better readability
+    marginVertical: 5,
+    color: '#333', 
   },
   eventImage: {
-    width: 200,  // Width of the image
-    height: 200, // Height of the image
-    marginBottom: 20, // Add some space below the image
-    borderRadius: 10, // Optional: rounded corners
+    width: 200,  
+    height: 200, 
+    marginBottom: 20,
+    borderRadius: 10, 
   },
 });
