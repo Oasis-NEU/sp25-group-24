@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     right: 20,
   },
   rectangle: {
-    width: 300,
+    width: 350,
     height: 500, 
     backgroundColor: 'grey',
     borderRadius: 10,
@@ -324,9 +324,8 @@ const styles = StyleSheet.create({
     color: '#333', 
   },
   eventImage: {
-    width: 200,  
-    height: 200, 
+    width: 300,  
+    height: 300, 
     marginBottom: 20,
-    borderRadius: 10, 
   },
 });
