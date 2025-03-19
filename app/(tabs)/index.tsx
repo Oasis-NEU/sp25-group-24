@@ -106,12 +106,19 @@ import React, { useEffect, useState } from 'react';
        <View style={styles.rectangle}>
          <View style={styles.topSection}>
            <Text style={styles.title}>{currentEvent.name}</Text>
+           <View style={styles.dateTimeContainer}>
+  <Text style={styles.dateTimeText}>{currentEvent.date}</Text>
+  <Text style={styles.dateTimeText}> | </Text>
+  <Text style={styles.dateTimeText}>{currentEvent.time}</Text>
+</View>
            <Image
    source={{ uri: currentEvent.image_link }}
    style={styles.eventImage}
    resizeMode="contain"
  />
-           <ScrollView style={{ maxHeight: 150 }}>
+
+
+ <ScrollView style={{ flex: 1 }}>
   <Text style={styles.description}>{currentEvent.description}</Text>
 </ScrollView>
          </View>
@@ -264,13 +271,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10, 
     flexWrap: 'wrap',
   },
-  buttonContainer: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    width: '100%', 
-    position: 'absolute', 
-    bottom: 20 
-  },
+
   button: {
     paddingVertical: 10,  
     paddingHorizontal: 10,
@@ -323,11 +324,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   topSection: {
-    marginBottom: 10,
     alignItems: 'center',
-    flexGrow: 1,  
-    flexShrink: 0,  
+    flex: 1, 
   },
+  buttonContainer: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    width: '100%', 
+    marginTop: 10, 
+  },
+  
   disabledButton: {
     backgroundColor: '#d3d3d3', 
     opacity: 0.6, 
@@ -340,7 +346,21 @@ const styles = StyleSheet.create({
   },
   eventImage: {
     width: 300,  
-    height: 250, 
+    height: 200, 
     marginBottom: 20,
+  },
+  dateTimeContainer: {
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center',
+    marginBottom: 10, 
+    marginTop: 5,
+  },
+  
+  dateTimeText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+    marginHorizontal: 5, 
   },
 })
