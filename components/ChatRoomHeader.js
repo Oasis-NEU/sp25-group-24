@@ -7,13 +7,14 @@ import { Image } from 'expo-image';
 import { blurhash } from '../components/utils/common'
 
 const ios = Platform.OS =='ios';
-
 export default function ChatRoomHeader({name}) {
     const router = useRouter();
     const {top} = useSafeAreaInsets();
 
     return (
-      <View style={{ paddingTop: ios? top: top + 10, flexDirection: "row", justifyContent: "space-between", alignItems:"center", paddingHorizontal: 15, backgroundColor: "#BB9DBB" }}>
+      <View style={{ paddingTop: ios? top: top + 10, flexDirection: "row", 
+                    justifyContent: "space-between", alignItems:"center", paddingHorizontal: 15, 
+                    backgroundColor: "#BB9DBB" }}>
 
     {/* Back button, this is a comment example inside a return statement */}
           <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 10}}>
