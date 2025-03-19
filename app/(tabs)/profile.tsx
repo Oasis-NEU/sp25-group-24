@@ -14,6 +14,18 @@ const Profile: React.FC = () => {
   const [topics, setTopics] = useState<string[]>([]);
   const [newTopic, setNewTopic] = useState('');
 
+  const [isEditing, setIsEditing] = useState<{ name: boolean; email: boolean; major: boolean }>({
+    name: false,
+    email: false,
+    major: false,
+  });
+
+  const [profile, setProfile] = useState<{ name: string; email: string; major: string }>({
+    name: 'Name!',
+    email: 'name.rest@email.com',
+    major: 'Computer Science',
+  });
+
   const toggleSection = (section: string) => {
     setExpanded((prev) => ({
       ...prev,
@@ -40,8 +52,50 @@ const Profile: React.FC = () => {
       <View style={styles.profileHeader}>
         <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.profileImage} />
         <View style={styles.profileInfo}>
-          <Text style={styles.name}>Name!</Text>
-          <Text style={styles.email}>name.rest@email.com</Text>
+          {/* Editable Name */}
+          {isEditing.name ? (
+            <TextInput
+              style={styles.editableText}
+              value={profile.name}
+              onChangeText={(text) => setProfile({ ...profile, name: text })}
+              onBlur={() => setIsEditing({ ...isEditing, name: false })}
+              autoFocus
+            />
+          ) : (
+            <TouchableOpacity onPress={() => setIsEditing({ ...isEditing, name: true })}>
+              <Text style={styles.name}>{profile.name}</Text>
+            </TouchableOpacity>
+          )}
+
+          {/* Editable Email */}
+          {isEditing.email ? (
+            <TextInput
+              style={styles.editableText}
+              value={profile.email}
+              onChangeText={(text) => setProfile({ ...profile, email: text })}
+              onBlur={() => setIsEditing({ ...isEditing, email: false })}
+              autoFocus
+            />
+          ) : (
+            <TouchableOpacity onPress={() => setIsEditing({ ...isEditing, email: true })}>
+              <Text style={styles.email}>{profile.email}</Text>
+            </TouchableOpacity>
+          )}
+
+          {/* Editable Major */}
+          {isEditing.major ? (
+            <TextInput
+              style={styles.editableText}
+              value={profile.major}
+              onChangeText={(text) => setProfile({ ...profile, major: text })}
+              onBlur={() => setIsEditing({ ...isEditing, major: false })}
+              autoFocus
+            />
+          ) : (
+            <TouchableOpacity onPress={() => setIsEditing({ ...isEditing, major: true })}>
+              <Text style={styles.major}>{profile.major}</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
 
@@ -134,6 +188,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#888',
     marginTop: 5,
+  },
+  major: {
+    fontSize: 16,
+    color: '#444',
+    marginTop: 5,
+  },
+  editableText: {
+    fontSize: 16,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
+    paddingVertical: 2,
   },
   section: {
     marginBottom: 15,
