@@ -14,7 +14,7 @@ const MessageCard = ({name, message, time, count, image, onPress}:any) => {
         <Image source= {image} style={styles.image}/>
         <View>
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.message}>{message}</Text>
+            <Text style={styles.message}>{message || " "}</Text>
         </View>
       </View>
 

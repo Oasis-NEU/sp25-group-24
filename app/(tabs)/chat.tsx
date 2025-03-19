@@ -93,16 +93,17 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
       <FlatList  // container for data
         data= {data} 
         keyExtractor={(item) => item.name} // Item is the current value (chat data), index is it's position
-        renderItem={({item}) => ( // renderItem tells Flatlist how to style each data
+        renderItem={({ item }) => (
           <MessageCard 
-            name ={item.name} 
-            message = {item.message} 
-            image= {item.image} 
+            name={item.name} 
+            message={item.message || "Start messaging"} // Ensure message is never an empty string
+            image={item.image} 
             time={item.time} 
-            count= {item.messageCount}
-            onPress={() => openchatRoom(item)} // when user tap on chat, open chat room, iten is the current chat data
+            count={item.messageCount}
+            onPress={() => openchatRoom(item)}
           />
-        )} 
+        )}
+
       />
     </View>
   );
