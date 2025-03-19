@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button } from 'react-native';
 
 const Profile: React.FC = () => {
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({
-    techClub: false,
-    artClub: false,
-    sportsClub: false,
+    clubs: false,
+    events: false,
+    topics: false,
   });
 
-  // Toggle function for drop-down sections
+  const [clubs, setClubs] = useState<string[]>(['Oasis', 'Scout', 'Sports Club XYZ']);
+  const [newClub, setNewClub] = useState('');
+  const [events] = useState<string[]>(['Tech Conference', 'Art Showcase', 'Marathon']);
+  const [topics, setTopics] = useState<string[]>([]);
+  const [newTopic, setNewTopic] = useState('');
+
   const toggleSection = (section: string) => {
     setExpanded((prev) => ({
       ...prev,
@@ -16,43 +21,83 @@ const Profile: React.FC = () => {
     }));
   };
 
+  const addClub = () => {
+    if (newClub.trim()) {
+      setClubs([...clubs, newClub]);
+      setNewClub('');
+    }
+  };
+
+  const addTopic = () => {
+    if (newTopic.trim()) {
+      setTopics([...topics, newTopic]);
+      setNewTopic('');
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {/* Profile Header */}
       <View style={styles.profileHeader}>
-        <Image
-          source={{ uri: 'https://via.placeholder.com/150' }} // Replace with actual image URL
-          style={styles.profileImage}
-        />
-        <Text style={styles.name}>Name!</Text>
-        <Text style={styles.email}>ananya@email.com</Text>
+        <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.profileImage} />
+        <View style={styles.profileInfo}>
+          <Text style={styles.name}>Ananya Pochinapeddi</Text>
+          <Text style={styles.email}>ananya@email.com</Text>
+        </View>
       </View>
 
-      {/* Drop-down Sections for Clubs */}
+      {/* Clubs Dropdown */}
       <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection('techClub')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Oasis</Text>
+        <TouchableOpacity onPress={() => toggleSection('clubs')} style={styles.dropdownHeader}>
+          <Text style={styles.sectionTitle}>Clubs</Text>
         </TouchableOpacity>
-        {expanded.techClub && (
-          <Text style={styles.dropdownContent}>Location: West Villiage H, Room 203</Text>
+        {expanded.clubs && (
+          <View style={styles.dropdownContent}>
+            {clubs.map((club, index) => (
+              <Text key={index} style={styles.listItem}>{club}</Text>
+            ))}
+            <TextInput
+              style={styles.input}
+              placeholder="Add a new club"
+              value={newClub}
+              onChangeText={setNewClub}
+            />
+            <Button title="Add Club" onPress={addClub} />
+          </View>
         )}
       </View>
 
+      {/* Events Dropdown */}
       <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection('artClub')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Scout</Text>
+        <TouchableOpacity onPress={() => toggleSection('events')} style={styles.dropdownHeader}>
+          <Text style={styles.sectionTitle}>Upcoming Events</Text>
         </TouchableOpacity>
-        {expanded.artClub && (
-          <Text style={styles.dropdownContent}>Location: Ryder Hall, Room 105</Text>
+        {expanded.events && (
+          <View style={styles.dropdownContent}>
+            {events.map((event, index) => (
+              <Text key={index} style={styles.listItem}>{event}</Text>
+            ))}
+          </View>
         )}
       </View>
 
+      {/* Topics Dropdown */}
       <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection('sportsClub')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Sports Club XYZ</Text>
+        <TouchableOpacity onPress={() => toggleSection('topics')} style={styles.dropdownHeader}>
+          <Text style={styles.sectionTitle}>Preferred Topics</Text>
         </TouchableOpacity>
-        {expanded.sportsClub && (
-          <Text style={styles.dropdownContent}>Location: XYZ place</Text>
+        {expanded.topics && (
+          <View style={styles.dropdownContent}>
+            {topics.map((topic, index) => (
+              <Text key={index} style={styles.listItem}>{topic}</Text>
+            ))}
+            <TextInput
+              style={styles.input}
+              placeholder="Add a new topic"
+              value={newTopic}
+              onChangeText={setNewTopic}
+            />
+            <Button title="Add Topic" onPress={addTopic} />
+          </View>
         )}
       </View>
     </ScrollView>
@@ -70,20 +115,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  profileImageContainer: {
-    marginRight: 15,
-  },
   profileImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    marginRight: 15,
     borderWidth: 3,
-    borderColor: '#ff6b6b',
-    marginBottom: 10,
-  
+    borderColor: '#000',
   },
   profileInfo: {
-    flex: 1,
     flexDirection: 'column',
   },
   name: {
@@ -97,9 +137,6 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    paddingBottom: 5,
   },
   dropdownHeader: {
     backgroundColor: '#ff6b6b',
@@ -112,11 +149,22 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   dropdownContent: {
-    fontSize: 16,
     padding: 10,
     backgroundColor: '#ffdada',
     borderRadius: 5,
     marginTop: 5,
+  },
+  listItem: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 8,
+    borderRadius: 5,
+    marginBottom: 5,
+    backgroundColor: '#fff',
   },
 });
 
