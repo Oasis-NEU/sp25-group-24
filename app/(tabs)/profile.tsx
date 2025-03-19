@@ -40,8 +40,8 @@ const Profile: React.FC = () => {
       <View style={styles.profileHeader}>
         <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.profileImage} />
         <View style={styles.profileInfo}>
-          <Text style={styles.name}>Ananya Pochinapeddi</Text>
-          <Text style={styles.email}>ananya@email.com</Text>
+          <Text style={styles.name}>Name!</Text>
+          <Text style={styles.email}>name.rest@email.com</Text>
         </View>
       </View>
 
