@@ -24,35 +24,35 @@ const Profile: React.FC = () => {
           source={{ uri: 'https://via.placeholder.com/150' }} // Replace with actual image URL
           style={styles.profileImage}
         />
-        <Text style={styles.name}>Ananya Pochinapeddi</Text>
+        <Text style={styles.name}>Name!</Text>
         <Text style={styles.email}>ananya@email.com</Text>
       </View>
 
       {/* Drop-down Sections for Clubs */}
       <View style={styles.section}>
         <TouchableOpacity onPress={() => toggleSection('techClub')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Tech Club</Text>
+          <Text style={styles.sectionTitle}>Oasis</Text>
         </TouchableOpacity>
         {expanded.techClub && (
-          <Text style={styles.dropdownContent}>Location: Innovation Lab, Building 3</Text>
+          <Text style={styles.dropdownContent}>Location: West Villiage H, Room 203</Text>
         )}
       </View>
 
       <View style={styles.section}>
         <TouchableOpacity onPress={() => toggleSection('artClub')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Art Club</Text>
+          <Text style={styles.sectionTitle}>Scout</Text>
         </TouchableOpacity>
         {expanded.artClub && (
-          <Text style={styles.dropdownContent}>Location: Creative Arts Center, Room 204</Text>
+          <Text style={styles.dropdownContent}>Location: Ryder Hall, Room 105</Text>
         )}
       </View>
 
       <View style={styles.section}>
         <TouchableOpacity onPress={() => toggleSection('sportsClub')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Sports Club</Text>
+          <Text style={styles.sectionTitle}>Sports Club XYZ</Text>
         </TouchableOpacity>
         {expanded.sportsClub && (
-          <Text style={styles.dropdownContent}>Location: Athletic Complex, Field 2</Text>
+          <Text style={styles.dropdownContent}>Location: XYZ place</Text>
         )}
       </View>
     </ScrollView>
@@ -66,8 +66,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   profileHeader: {
+    flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
+  },
+  profileImageContainer: {
+    marginRight: 15,
   },
   profileImage: {
     width: 120,
@@ -76,6 +80,11 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#ff6b6b',
     marginBottom: 10,
+  
+  },
+  profileInfo: {
+    flex: 1,
+    flexDirection: 'column',
   },
   name: {
     fontSize: 22,
@@ -84,6 +93,7 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 16,
     color: '#888',
+    marginTop: 5,
   },
   section: {
     marginBottom: 15,
