@@ -94,7 +94,7 @@ export default function Events() {
       <View style={styles.imagePlaceholder}>
           <Text style={styles.imageText}>Image Placeholder</Text>
         </View>
-        <Text style={styles.description}>This is the event description.</Text>
+        <Text style={styles.description}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -103,7 +103,7 @@ export default function Events() {
             style={[styles.button, styles.yButton]} 
             onPress={() => Alert.alert('Y pressed')}
           >
-            <Text style={styles.buttonText}>Join!</Text>
+            <Text style={[styles.buttonText,{ color: '#cc0000'}]}>Join!</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
@@ -123,12 +123,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor:'#e63946',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'white',
+    fontSize: 30,
+    fontWeight: 800,
+    color: 'black',
     marginBottom: 10,
   },
   topSection: {
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 150,
     backgroundColor: '#d3d3d3',
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
@@ -148,39 +149,45 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   description: {
-    fontSize: 16,
-    color: 'white',
+    fontSize: 20,
+    color: 'black',
     textAlign: 'center',
     marginBottom: 20,
   },
   rectangle: {
-    width: 300,
-    height: 500,
-    backgroundColor: 'grey',
-    borderRadius: 10,
+    width: 350,
+    height: 600,
+    backgroundColor:'#fff',
+    borderRadius: 15,
     padding: 20,
     alignItems: 'center',
     justifyContent: 'space-between',
+    borderWidth: 5,
+    borderColor: '#cc0000ff'
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  button: {
-    paddingVertical: 10,
+  button: { 
+    paddingVertical: 20,
     paddingHorizontal: 20,
     borderRadius: 5,
+    marginHorizontal: 7,
+    
   },
   yButton: {
-    backgroundColor: '#4CAF50', 
+    backgroundColor: '#e0e0e0', 
   },
   xButton: {
-    backgroundColor: '#FF5733', 
+    backgroundColor: '#CC0000', 
   },
   buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 23,
+    fontWeight: 800,
     color: 'white',
+    textAlign: 'center',
+    textAlignVertical: 'center'
   },
 });
 
