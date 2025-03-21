@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button } from 'react-native';
+import Auth from '@/components/Auth';
 
 const Profile: React.FC = () => {
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({
