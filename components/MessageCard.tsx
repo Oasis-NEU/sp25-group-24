@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
       gap: scale(20),
       position: "relative",
       width: "100%",
-      backgroundColor: "#F8FAFF",
+      backgroundColor: "#ffffff",
       shadowColor: "#000",
       shadowOpacity: 0.25,
       shadowRadius: 2,
@@ -82,14 +82,14 @@ const styles = StyleSheet.create({
       fontWeight: "500",
     },
     time:{
-      color: "#8B4290",
+      color: "#D32F2F",
       fontWeight: "bold",
       fontSize: moderateScale(12),
     },
 
     // this the little bubble with how many messages you have with messageCount inside it
     messageCountContainer:{
-      backgroundColor: "#8B4280",
+      backgroundColor: "#D32F2F",
       width: moderateScale(22),
       height: moderateScale(22),
       borderRadius: moderateScale(22),
