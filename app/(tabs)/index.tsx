@@ -15,8 +15,9 @@ export default function Events() {
   const [eventTime, setEventTime] = useState('');
   const [eventImageLink, setEventImageLink] = useState('');
 
+  
   const { user, loading, isAuthenticated } = useSupabaseAuth();
-
+  
   useEffect(() => {
     getAllEvents();
   }, []);
