@@ -33,17 +33,6 @@ const MessageCard = ({name, message, time, count, image, onPress}:any) => {
 
 // CSS file
 
-const SearchBar = () => {
-  return (
-    <View style={styles.searchContainer}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Search..."
-        placeholderTextColor="#999"
-      />
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   // This is the container that have all of the chat window
@@ -115,23 +104,7 @@ const styles = StyleSheet.create({
     gap: verticalScale(7),
 
     },
-
-    searchContainer: {
-      backgroundColor: "#EEE",
-      borderRadius: 20,
-      padding: 10,
-      marginHorizontal: 20,
-      marginVertical: 10,
-    },
-
-    searchInput: {
-      fontSize: moderateScale(14),
-      color: "black",
-    },
 });
 
 
 export default MessageCard
-
-// working on a search bar in chat room. Status: in progress....
-// working on the chat room. Status: in progress...
