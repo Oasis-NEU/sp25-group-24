@@ -1,6 +1,6 @@
 // This is the chat room page
 
-import {View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
+import {View, Text, Image, TextInput, TouchableOpacity, Dimensions, GestureResponderEvent } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import Roomheader from "../components/Roomheader";
@@ -9,6 +9,8 @@ import MessageList from "../components/MessageList";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useState } from 'react';
 import {Feather} from '@expo/vector-icons';
+
+const screenWidth = Dimensions.get('window').width; // get screen width
 
 export default function ChatRoom() {
     const {name, image, message} = useLocalSearchParams();
@@ -52,9 +54,11 @@ export default function ChatRoom() {
         setText(''); // new state of text went from the previous typed answer to an empty field
     };
 
-    const switchUser = () => {
-        setCurrentUser(prevUser => (prevUser === 'You'? String(name) : "You")); // toggle between users
-    };
+    const handleTapToSwitchUser = (event: GestureResponderEvent) => {
+        const touchX = event.nativeEvent.locationX;
+        const newUser = touchX < screenWidth / 2 ?String(name) : 'You';
+        setCurrentUser(newUser);
+    }
 
     let imageSource = { uri: image};
     if (!image || typeof image !== "string") {
@@ -63,7 +67,12 @@ export default function ChatRoom() {
     
 
     return (
-        <View style={{flex: 1, backgroundColor:"#f5f5f5"}}>
+        <TouchableOpacity
+            style={{flex: 1, backgroundColor:"#f5f5f5"}}
+            activeOpacity={1}
+            onPress={handleTapToSwitchUser}
+        >
+
             <StatusBar style="dark"/>
             <Roomheader name={name} image={imageSource} router ={router} /> {/* remove the chatRoom title, and pass the header in RoomHeader */}
 
@@ -96,17 +105,9 @@ export default function ChatRoom() {
                                     <Feather name='send' size={hp(3.0)} color='#737373' />
                             </TouchableOpacity>
                         </View>
-
-                        <TouchableOpacity  // style for switch
-                            style = {{ alignSelf: "center", backgroundColor: '#c7d2fe', padding : 10, borderRadius: 50}} 
-                            onPress={switchUser}
-                        >
-                            <Text style = {{ color: 'white', fontWeight: 'bold'}}>Switch</Text>
-                        </TouchableOpacity>
-
                     </View>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
