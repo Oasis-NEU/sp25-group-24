@@ -44,7 +44,7 @@ export default function ChatRoom() {
         const newMessage = {
             id: Date.now() + Math.random(), // unique id fo message based on current time
             sender: currentUser, 
-            text: text,
+            text: text || '',
             time: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}), // get current time
         };
 
@@ -94,7 +94,7 @@ export default function ChatRoom() {
                             <TextInput
                                 placeholder='Type message as'
                                 style= {{fontSize: hp(2), flex: 1}}
-                                value = {text}
+                                value = {text || ''}
                                 onChangeText={setText}
                             />
 

@@ -21,7 +21,7 @@ export default function MessageList({messages}) {
                 borderWidth: 1,
                 borderColor: '#ccc',
             }}>
-                <Text style = {{ fontSize: hp(1.9)}}>{item.text}</Text>
+                <Text style = {{ fontSize: hp(1.9)}}>{item.text || ''}</Text>
                 <Text style = {{ fontSize: hp(1.5), color: '#gray', alignSelf: 'flex-end'}}>{item.time}</Text>
             </View>
         )}

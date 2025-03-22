@@ -39,7 +39,7 @@ export default function Roomheader({ name, image, router }) {
                     />
 
                     {/* name of user */}
-                    <Text style={{ fontSize: hp(2.5), font: "medium", color: "gray" }}>{name}</Text>
+                    <Text style={{ fontSize: hp(2.5), font: "medium", color: "gray" }}>{name || 'Unknown'}</Text>
 
               </View>
             ),
