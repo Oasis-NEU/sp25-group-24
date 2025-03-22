@@ -48,6 +48,7 @@ export default function TabLayout() {
         options={{
           title: 'Chat',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="comments" color={color} />,
+          headerShown: false,
         }}
         />
     </Tabs>

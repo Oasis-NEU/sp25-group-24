@@ -3,13 +3,14 @@
 import { View, Text, TextInput, StyleSheet, Image, FlatList } from 'react-native';
 import MessageCard from '@/components/MessageCard';
 import React, { useState } from "react";
+import ChatHeader from '@/components/ChatHeader';
 import { useRouter } from 'expo-router'; // This is so we can go from chat to chat room
 
 
 export default function Chat(): JSX.Element { // export this chat page, also Chat() is a function = independent
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-  
+  const [searchText, setSearchText] = useState<string>(''); // states for when put a text and when no text is entered
+
     // The user's data
   const data = [
     {
@@ -94,7 +95,7 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
 
   // filter the data for only what is put in the search bar
   const filteredChats = data.filter((chat) => // dta.filter(..) creates a new array that name in the search query
-      chat.name.toLowerCase().includes(searchQuery.toLowerCase())
+      chat.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
   const openchatRoom = (Chat: { // open chat room from chat file. chat file have (image....) params
@@ -129,18 +130,11 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
     <View style={{flex: 1}}>
 
       {/* Search bar */}
-      <TextInput
-        style = {styles.searchInput}
-        placeholder='Search...'
-        placeholderTextColor='#999'
-        value = {searchQuery}
-        onChangeText={setSearchQuery}
-      />
+      <ChatHeader searchText={searchText} setSearchText = {setSearchText} />
 
-      {/* Search bar for chat list */}
 
       <FlatList  // container for data
-        data= {filteredChats} 
+        data= {filteredChats} // contains new filter data also if user want to filter
         keyExtractor={(item) => item.name} // Item is the current value (chat data), index is it's position
         renderItem={({ item }) => (
           <MessageCard 
@@ -158,17 +152,3 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
     </View>
   );
 };
-
-
-// styling for search bar
-const styles = StyleSheet.create ({
-  searchInput: {
-    backgroundColor: 'EEE',
-    borderRadius: 20,
-    padding: 10,
-    marginHorizontal: 20,
-    marginVertical: 10,
-    fontSize: 16,
-    color: 'black',
-  },
-});

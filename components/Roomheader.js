@@ -45,9 +45,9 @@ export default function Roomheader({ name, image, router }) {
             ),
             // in the right side of the header, we have call and video call icon
             headerRight: ()=> (
-              <View style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
+              <View style={{flexDirection: 'row', alignItems: 'center', gap: 15, marginRight: 10}}>
                 <Ionicons name='call' size={hp(2.8)} color={'#737373'} /> 
-                <Ionicons name='videocam' size={hp(2.8)} color={'#737373'} />
+                <Ionicons name='videocam' size={hp(3)} color={'#737373'} />
               </View>
             )
         }}
