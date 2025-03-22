@@ -5,11 +5,15 @@ import MessageCard from '@/components/MessageCard';
 import React, { useState } from "react";
 import ChatHeader from '@/components/ChatHeader';
 import { useRouter } from 'expo-router'; // This is so we can go from chat to chat room
+import { useSupabaseAuth } from '../../hooks/useSupabaseAuth';
+import Auth from '@/components/Auth';
 
 
 export default function Chat(): JSX.Element { // export this chat page, also Chat() is a function = independent
   const router = useRouter();
   const [searchText, setSearchText] = useState<string>(''); // states for when put a text and when no text is entered
+
+  const { user, loading, isAuthenticated } = useSupabaseAuth();
 
     // The user's data
   const data = [
@@ -126,7 +130,7 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
   };
 
 
-  return (
+  return isAuthenticated ? (
     <View style={{flex: 1}}>
 
       {/* Search bar */}
@@ -150,5 +154,7 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
         )}
       />
     </View>
-  );
+  ) : (
+        <Auth />
+      );
 };

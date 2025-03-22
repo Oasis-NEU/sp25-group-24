@@ -17,7 +17,7 @@ export default function Events() {
 
   
   const { user, loading, isAuthenticated } = useSupabaseAuth();
-  
+
   useEffect(() => {
     getAllEvents();
   }, []);

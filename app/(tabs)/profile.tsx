@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button } from 'react-native';
+import { useSupabaseAuth } from '../../hooks/useSupabaseAuth';
 import Auth from '@/components/Auth';
 
 const Profile: React.FC = () => {
+  const { user, loading, isAuthenticated } = useSupabaseAuth();
+
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({
     clubs: false,
     events: false,
@@ -48,7 +51,7 @@ const Profile: React.FC = () => {
     }
   };
 
-  return (
+  return isAuthenticated ? (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.profileHeader}>
         <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.profileImage} />
@@ -156,7 +159,9 @@ const Profile: React.FC = () => {
         )}
       </View>
     </ScrollView>
-  );
+  ) : (
+        <Auth />
+      );
 };
 
 const styles = StyleSheet.create({
