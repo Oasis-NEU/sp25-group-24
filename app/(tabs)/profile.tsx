@@ -11,8 +11,21 @@ const Profile: React.FC = () => {
     topics: false,
   });
 
-  const [clubs, setClubs] = useState<string[]>(['Oasis', 'Scout', 'Sports Club XYZ']);
-  const [newClub, setNewClub] = useState('');
+  // Enhanced club structure with dates and times
+  interface Club {
+    name: string;
+    schedule: string;
+    id: string;
+  }
+
+  const [clubs, setClubs] = useState<Club[]>([
+    { id: '1', name: 'Oasis', schedule: 'Mondays 5-7pm' },
+    { id: '2', name: 'Scout', schedule: 'Tuesdays 3-5pm' },
+    { id: '3', name: 'Sports Club XYZ', schedule: 'Fridays 2-4pm' }
+  ]);
+  
+  const [newClub, setNewClub] = useState({ name: '', schedule: '' });
+  const [editingClubId, setEditingClubId] = useState<string | null>(null);
   const [topics, setTopics] = useState<string[]>([]);
   
   // Pre-defined list of interests that the user can choose from
@@ -41,10 +54,40 @@ const Profile: React.FC = () => {
   };
 
   const addClub = () => {
-    if (newClub.trim()) {
-      setClubs([...clubs, newClub]);
-      setNewClub('');
+    if (newClub.name.trim() && newClub.schedule.trim()) {
+      const newClubWithId = {
+        ...newClub,
+        id: Date.now().toString() // Simple unique ID
+      };
+      setClubs([...clubs, newClubWithId]);
+      setNewClub({ name: '', schedule: '' });
     }
+  };
+
+  const startEditClub = (club: Club) => {
+    setEditingClubId(club.id);
+    setNewClub({ name: club.name, schedule: club.schedule });
+  };
+
+  const updateClub = () => {
+    if (editingClubId && newClub.name.trim() && newClub.schedule.trim()) {
+      setClubs(clubs.map(club => 
+        club.id === editingClubId 
+          ? { ...club, name: newClub.name, schedule: newClub.schedule }
+          : club
+      ));
+      setNewClub({ name: '', schedule: '' });
+      setEditingClubId(null);
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingClubId(null);
+    setNewClub({ name: '', schedule: '' });
+  };
+
+  const deleteClub = (id: string) => {
+    setClubs(clubs.filter(club => club.id !== id));
   };
 
   // Function to handle adding a selected topic to the list
@@ -111,23 +154,82 @@ const Profile: React.FC = () => {
         </View>
       </View>
 
-      {/* Clubs Dropdown */}
+      {/* Enhanced Clubs Dropdown with Split Header */}
       <View style={styles.section}>
         <TouchableOpacity onPress={() => toggleSection('clubs')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Clubs</Text>
+          <View style={styles.splitHeader}>
+            <View style={styles.headerSection}>
+              <Text style={styles.sectionTitle}>Club</Text>
+            </View>
+            <View style={styles.headerDivider} />
+            <View style={styles.headerSection}>
+              <Text style={styles.sectionTitle}>Schedule</Text>
+            </View>
+          </View>
         </TouchableOpacity>
+        
         {expanded.clubs && (
           <View style={styles.dropdownContent}>
-            {clubs.map((club, index) => (
-              <Text key={index} style={styles.listItem}>{club}</Text>
+            {/* Display list of clubs with edit & delete options */}
+            {clubs.map((club) => (
+              <View key={club.id} style={styles.clubItem}>
+                <View style={styles.clubInfo}>
+                  <View style={styles.clubNameContainer}>
+                    <Text style={styles.clubName}>{club.name}</Text>
+                  </View>
+                  <View style={styles.clubScheduleContainer}>
+                    <Text style={styles.clubSchedule}>{club.schedule}</Text>
+                  </View>
+                </View>
+                <View style={styles.clubActions}>
+                  <TouchableOpacity onPress={() => startEditClub(club)} style={styles.editButton}>
+                    <Text style={styles.editButtonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => deleteClub(club.id)} style={styles.deleteButton}>
+                    <Text style={styles.deleteButtonText}>✕</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             ))}
-            <TextInput
-              style={styles.input}
-              placeholder="Add a new club"
-              value={newClub}
-              onChangeText={setNewClub}
-            />
-            <Button title="Add Club" onPress={addClub} />
+            
+            {/* Form to add/edit clubs */}
+            <View style={styles.clubFormContainer}>
+              <Text style={styles.clubSubTitle}>
+                {editingClubId ? 'Edit Club' : 'Add a New Club'}
+              </Text>
+              
+              <View style={styles.inputRow}>
+                <TextInput
+                  style={[styles.input, styles.clubNameInput]}
+                  placeholder="Club name"
+                  value={newClub.name}
+                  onChangeText={(text) => setNewClub({...newClub, name: text})}
+                />
+                <TextInput
+                  style={[styles.input, styles.clubScheduleInput]}
+                  placeholder="Meeting schedule"
+                  value={newClub.schedule}
+                  onChangeText={(text) => setNewClub({...newClub, schedule: text})}
+                />
+              </View>
+              
+              <View style={styles.buttonRow}>
+                {editingClubId ? (
+                  <>
+                    <TouchableOpacity onPress={updateClub} style={styles.actionButton}>
+                      <Text style={styles.actionButtonText}>Update Club</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={cancelEdit} style={[styles.actionButton, styles.cancelButton]}>
+                      <Text style={styles.actionButtonText}>Cancel</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <TouchableOpacity onPress={addClub} style={styles.actionButton}>
+                    <Text style={styles.actionButtonText}>Add Club</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
           </View>
         )}
       </View>
@@ -139,7 +241,7 @@ const Profile: React.FC = () => {
         </TouchableOpacity>
         {expanded.topics && (
           <View style={styles.dropdownContent}>
-            <Text style={styles.subTitle}>Select Your Interests:</Text>
+            <Text style={styles.interestSubTitle}>Select Your Interests:</Text>
             
             {/* Buttons for available topics */}
             <View style={styles.buttonContainer}>
@@ -167,7 +269,7 @@ const Profile: React.FC = () => {
             {/* Display list of selected topics */}
             {topics.length > 0 && (
               <View style={styles.selectedTopicsContainer}>
-                <Text style={styles.subTitle}>Your Selected Topics:</Text>
+                <Text style={styles.interestSubTitle}>Your Selected Topics:</Text>
                 {topics.map((topic, index) => (
                   <View key={index} style={styles.selectedTopicItem}>
                     <Text style={styles.listItem}>{topic}</Text>
@@ -190,7 +292,7 @@ const Profile: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#cc0000',
+    backgroundColor:'rgb(247, 121, 121)',
     padding: 20,
   },
   profileHeader: {
@@ -204,7 +306,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginRight: 15,
     borderWidth: 3,
-    borderColor: '#fff',
+    borderColor: '#cc0000',
   },
   profileInfo: {
     flexDirection: 'column',
@@ -212,15 +314,16 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 22,
     fontWeight: 'bold',
+    color: '#000'
   },
   email: {
     fontSize: 16,
-    color: '#fff',
+    color: '#000',
     marginTop: 5,
   },
   major: {
     fontSize: 16,
-    color: '#fff',
+    color: '#000',
     marginTop: 5,
   },
   editableText: {
@@ -232,7 +335,6 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 15,
   },
-// dropdown headers
   dropdownHeader: {
     backgroundColor: '#fff',
     padding: 10,
@@ -240,23 +342,138 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#000'
   },
-//title for the drop down headers
+  splitHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  headerSection: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  headerDivider: {
+    width: 1,
+    height: '100%',
+    backgroundColor: '#cc0000',
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#cc0000',
   },
-  subTitle: {
+  // Separate subtitle styles for clubs and interests
+  clubSubTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginVertical: 10,
     color: '#cc0000',
   },
+  interestSubTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    color: '#fff', // Yellow color for interest subtitles
+  },
   dropdownContent: {
     padding: 10,
-    backgroundColor: '#fba1a1',
+    backgroundColor: '#cc0000',
     borderRadius: 5,
     marginTop: 5,
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  clubItem: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    marginBottom: 8,
+    padding: 10,
+  },
+  clubInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  clubNameContainer: {
+    flex: 1,
+    paddingRight: 5,
+  },
+  clubScheduleContainer: {
+    flex: 1,
+    paddingLeft: 5,
+  },
+  clubName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#cc0000',
+  },
+  clubSchedule: {
+    fontSize: 16,
+    color: '#000',
+  },
+  clubActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  editButton: {
+    backgroundColor: '#cc0000',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+    marginRight: 8,
+  },
+  editButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  deleteButton: {
+    backgroundColor: '#000',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  clubFormContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 10,
+  },
+  inputRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  clubNameInput: {
+    flex: 1,
+    marginRight: 5,
+  },
+  clubScheduleInput: {
+    flex: 1,
+    marginLeft: 5,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  actionButton: {
+    backgroundColor: '#cc0000',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 2,
+  },
+  cancelButton: {
+    backgroundColor: '#333',
+  },
+  actionButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
   listItem: {
     fontSize: 16,
@@ -267,7 +484,6 @@ const styles = StyleSheet.create({
     borderColor: '#cc0000',
     padding: 8,
     borderRadius: 5,
-    marginBottom: 5,
     backgroundColor: '#fff',
   },
   buttonContainer: {
@@ -277,20 +493,19 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   topicButton: {
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     paddingVertical: 8,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 20,
-    marginBottom: 8,
-    marginRight: 8,
+    marginBottom: 3,
+    marginRight: 5,
   },
   selectedButton: {
-    backgroundColor: '#cc0000',
+    backgroundColor: '#000',
   },
-  //button text for inside interests
   buttonText: {
-    color: '#fff',
-    fontSize: 14,
+    color: '#cc0000',
+    fontSize: 15,
   },
   selectedButtonText: {
     fontWeight: 'bold',
