@@ -195,10 +195,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 5,
     marginTop: 5,
-    maxHeight: 400, // Adjust the height as needed
+    maxHeight: 450, // Adjust the height as needed
     color: '#cc0000',
     borderWidth: 3,
     borderColor: '#000',
+    height: 337,
   },
   listItem: {
     fontSize: 16,
