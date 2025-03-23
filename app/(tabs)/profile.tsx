@@ -62,7 +62,7 @@ const Profile: React.FC = () => {
   return isAuthenticated ? (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.profileHeader}>
-        <Image source={{ uri: 'https://via.placeholder.com/150' }} style={styles.profileImage} />
+        <Image source={{ uri: 'https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg' }} style={styles.profileImage} />
         <View style={styles.profileInfo}>
           {/* Editable Name */}
           {isEditing.name ? (
@@ -190,7 +190,7 @@ const Profile: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#cc0000',
     padding: 20,
   },
   profileHeader: {
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginRight: 15,
     borderWidth: 3,
-    borderColor: '#000',
+    borderColor: '#fff',
   },
   profileInfo: {
     flexDirection: 'column',
@@ -215,42 +215,46 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 16,
-    color: '#888',
+    color: '#fff',
     marginTop: 5,
   },
   major: {
     fontSize: 16,
-    color: '#444',
+    color: '#fff',
     marginTop: 5,
   },
   editableText: {
     fontSize: 16,
     borderBottomWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#fba1a1',
     paddingVertical: 2,
   },
   section: {
     marginBottom: 15,
   },
+// dropdown headers
   dropdownHeader: {
-    backgroundColor: '#ff6b6b',
+    backgroundColor: '#fff',
     padding: 10,
     borderRadius: 8,
+    borderWidth: 3,
+    borderColor: '#000'
   },
+//title for the drop down headers
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#cc0000',
   },
   subTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     marginVertical: 10,
-    color: '#444',
+    color: '#cc0000',
   },
   dropdownContent: {
     padding: 10,
-    backgroundColor: '#ffdada',
+    backgroundColor: '#fba1a1',
     borderRadius: 5,
     marginTop: 5,
   },
@@ -260,7 +264,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#cc0000',
     padding: 8,
     borderRadius: 5,
     marginBottom: 5,
@@ -283,6 +287,7 @@ const styles = StyleSheet.create({
   selectedButton: {
     backgroundColor: '#cc0000',
   },
+  //button text for inside interests
   buttonText: {
     color: '#fff',
     fontSize: 14,
@@ -297,7 +302,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#fff',
     padding: 8,
     borderRadius: 5,
     marginBottom: 5,
