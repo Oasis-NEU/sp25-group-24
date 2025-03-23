@@ -76,52 +76,59 @@ export default function Events() {
 
   return isAuthenticated ? (
     <View style={styles.container}>
-      {/* Add Event Button */}
-      <TouchableOpacity style={styles.plusIcon} onPress={() => setModalVisible(true)}>
-        <Icon name="add-circle" size={40} color="black" />
-      </TouchableOpacity>
-
       {/* If no events, just display text */}
       {events.length === 0 ? (
         <Text>No events available.</Text>
       ) : (
-        <View style={styles.rectangle}>
-          <View style={styles.topSection}>
-            <Text style={styles.title}>{events[currentEventIndex]?.name}</Text>
-            <Image
-              source={{ uri: events[currentEventIndex]?.image_link }}
-              style={styles.eventImage}
-              resizeMode="contain"
-            />
-            <ScrollView style={{ maxHeight: 150 }}>
-              <Text style={styles.description}>{events[currentEventIndex]?.description}</Text>
-            </ScrollView>
-          </View>
+        <View style={styles.rectangleContainer}>
+          {/* Add Event Button - now positioned on top of the rectangle with a circular background */}
+          <TouchableOpacity 
+            style={styles.plusIconContainer} 
+            onPress={() => setModalVisible(true)}
+          >
+            <View style={styles.plusIconCircle}>
+              <Icon name="add" size={35} color="#fff"/>
+            </View>
+          </TouchableOpacity>
+          
+          <View style={styles.rectangle}>
+            <View style={styles.topSection}>
+              <Text style={styles.title}>{events[currentEventIndex]?.name}</Text>
+              <Image
+                source={{ uri: events[currentEventIndex]?.image_link }}
+                style={styles.eventImage}
+                resizeMode="contain"
+              />
+              <ScrollView style={{ maxHeight: 150 }}>
+                <Text style={styles.description}>{events[currentEventIndex]?.description}</Text>
+              </ScrollView>
+            </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={[
-                styles.button,
-                styles.yButton,
-                currentEventIndex === -1 && styles.disabledButton,
-              ]}
-              onPress={() => joinEvent(events[currentEventIndex]?.id)}
-              disabled={currentEventIndex === -1}
-            >
-              <Text style={styles.buttonText}>Join!</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  styles.yButton,
+                  currentEventIndex === -1 && styles.disabledButton,
+                ]}
+                onPress={() => joinEvent(events[currentEventIndex]?.id)}
+                disabled={currentEventIndex === -1}
+              >
+                <Text style={styles.buttonText}>Join!</Text>
+              </TouchableOpacity>
 
-            <TouchableOpacity
-              style={[
-                styles.button,
-                styles.xButton,
-                currentEventIndex === -1 && styles.disabledButton,
-              ]}
-              onPress={goToNextEvent}
-              disabled={currentEventIndex === -1}
-            >
-              <Text style={styles.buttonText}>Not Interested</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.button,
+                  styles.xButton,
+                  currentEventIndex === -1 && styles.disabledButton,
+                ]}
+                onPress={goToNextEvent}
+                disabled={currentEventIndex === -1}
+              >
+                <Text style={styles.buttonText}>Not Interested</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       )}
@@ -156,27 +163,48 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e63946',
+    backgroundColor: '#cc0000',
   },
-  plusIcon: { 
-    position: 'absolute', 
-    top: 20, 
-    right: 20 
+  rectangleContainer: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  plusIconContainer: { 
+    position: 'absolute',
+    zIndex: 1, 
+    top: -15, 
+    right: -15, 
+  },
+  plusIconCircle: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#000', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3, 
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    borderWidth: 3,
+    borderColor: 'black',
   },
   rectangle: { 
-    width: 300, 
-    height: 500, 
+    width: 350, 
+    height: 650, 
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    borderWidth: 2,
-    borderColor: 'black',
+    borderWidth: 3,
+    borderColor: '#000',
   },
   title: {
-    fontSize: 24,
+    fontSize: 35,
     fontWeight: 'bold',
     color: 'black',
     marginBottom: 5,
@@ -212,16 +240,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: { 
-    fontSize: 17,
+    fontSize: 25,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
   },
   yButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor:'rgb(12, 177, 0)',
   },
   xButton: {
-    backgroundColor: '#FF5733',
+    backgroundColor: '#cc0000',
   },
   disabledButton: {
     backgroundColor: '#d3d3d3',
@@ -241,14 +269,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 24,
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 20,
   },
   input: {
     width: '100%',
     height: 40,
-    borderColor: '#ddd',
+    borderColor: '#fba1a1',
     borderWidth: 1,
     marginBottom: 10,
     paddingLeft: 10,
@@ -264,4 +292,3 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 });
-

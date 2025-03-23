@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button, FlatList } from 'react-native';
 import { useSupabaseAuth } from '../../hooks/useSupabaseAuth';
 import Auth from '@/components/Auth';
 
@@ -8,15 +8,18 @@ const Profile: React.FC = () => {
 
   const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({
     clubs: false,
-    events: false,
     topics: false,
   });
 
   const [clubs, setClubs] = useState<string[]>(['Oasis', 'Scout', 'Sports Club XYZ']);
   const [newClub, setNewClub] = useState('');
-  const [events] = useState<string[]>(['Tech Conference', 'Art Showcase', 'Marathon']);
   const [topics, setTopics] = useState<string[]>([]);
-  const [newTopic, setNewTopic] = useState('');
+  
+  // Pre-defined list of interests that the user can choose from
+  const availableTopics = [
+    'Sports', 'Music', 'Art', 'Technology', 'Travel', 'Reading', 'Movies', 'Photography', 'Cultural', 'Design',
+    'Intramural Sports', 'Engineering', 'Medical', 'Biology', 'Dance'
+  ];
 
   const [isEditing, setIsEditing] = useState<{ name: boolean; email: boolean; major: boolean }>({
     name: false,
@@ -44,11 +47,16 @@ const Profile: React.FC = () => {
     }
   };
 
-  const addTopic = () => {
-    if (newTopic.trim()) {
-      setTopics([...topics, newTopic]);
-      setNewTopic('');
+  // Function to handle adding a selected topic to the list
+  const addTopic = (topic: string) => {
+    if (!topics.includes(topic)) {
+      setTopics((prevTopics) => [...prevTopics, topic]);
     }
+  };
+
+  // Function to remove a topic from the list
+  const removeTopic = (topicToRemove: string) => {
+    setTopics(topics.filter(topic => topic !== topicToRemove));
   };
 
   return isAuthenticated ? (
@@ -124,44 +132,59 @@ const Profile: React.FC = () => {
         )}
       </View>
 
-      {/* Events Dropdown */}
-      <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection('events')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Upcoming Events</Text>
-        </TouchableOpacity>
-        {expanded.events && (
-          <View style={styles.dropdownContent}>
-            {events.map((event, index) => (
-              <Text key={index} style={styles.listItem}>{event}</Text>
-            ))}
-          </View>
-        )}
-      </View>
-
-      {/* Topics Dropdown */}
+      {/* Topics Dropdown with Button Selection */}
       <View style={styles.section}>
         <TouchableOpacity onPress={() => toggleSection('topics')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Preferred Topics</Text>
+          <Text style={styles.sectionTitle}>Interests</Text>
         </TouchableOpacity>
         {expanded.topics && (
           <View style={styles.dropdownContent}>
-            {topics.map((topic, index) => (
-              <Text key={index} style={styles.listItem}>{topic}</Text>
-            ))}
-            <TextInput
-              style={styles.input}
-              placeholder="Add a new topic"
-              value={newTopic}
-              onChangeText={setNewTopic}
-            />
-            <Button title="Add Topic" onPress={addTopic} />
+            <Text style={styles.subTitle}>Select Your Interests:</Text>
+            
+            {/* Buttons for available topics */}
+            <View style={styles.buttonContainer}>
+              {availableTopics.map((topic) => (
+                <TouchableOpacity
+                  key={topic}
+                  style={[
+                    styles.topicButton,
+                    topics.includes(topic) ? styles.selectedButton : {}
+                  ]}
+                  onPress={() => topics.includes(topic) ? removeTopic(topic) : addTopic(topic)}
+                >
+                  <Text 
+                    style={[
+                      styles.buttonText,
+                      topics.includes(topic) ? styles.selectedButtonText : {}
+                    ]}
+                  >
+                    {topic}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            
+            {/* Display list of selected topics */}
+            {topics.length > 0 && (
+              <View style={styles.selectedTopicsContainer}>
+                <Text style={styles.subTitle}>Your Selected Topics:</Text>
+                {topics.map((topic, index) => (
+                  <View key={index} style={styles.selectedTopicItem}>
+                    <Text style={styles.listItem}>{topic}</Text>
+                    <TouchableOpacity onPress={() => removeTopic(topic)}>
+                      <Text style={styles.removeButton}>✕</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </View>
+            )}
           </View>
         )}
       </View>
     </ScrollView>
   ) : (
-        <Auth />
-      );
+    <Auth />
+  );
 };
 
 const styles = StyleSheet.create({
@@ -219,6 +242,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
   },
+  subTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    color: '#444',
+  },
   dropdownContent: {
     padding: 10,
     backgroundColor: '#ffdada',
@@ -236,6 +265,47 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 5,
     backgroundColor: '#fff',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 15,
+  },
+  topicButton: {
+    backgroundColor: '#000',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginBottom: 8,
+    marginRight: 8,
+  },
+  selectedButton: {
+    backgroundColor: '#cc0000',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
+  },
+  selectedButtonText: {
+    fontWeight: 'bold',
+  },
+  selectedTopicsContainer: {
+    marginTop: 10,
+  },
+  selectedTopicItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 8,
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  removeButton: {
+    color: '#cc0000',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
