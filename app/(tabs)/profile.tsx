@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     borderRadius: 50,
     position: 'absolute',
-    bottom: 20, // Distance from the bottom
+    bottom: 25, // Distance from the bottom
     left: '5%',
   },
   profileHeader: {

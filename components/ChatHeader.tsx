@@ -18,7 +18,7 @@ export default function ChatHeader({searchText, setSearchText} : ChatHeaderProps
             paddingHorizontal: 15,
             paddingVertical: 10,
             borderTopWidth: 0,
-            height: 63,
+            height: 110,
             width: '100%',
             justifyContent: 'space-between',
         }}>
@@ -37,10 +37,11 @@ export default function ChatHeader({searchText, setSearchText} : ChatHeaderProps
                         borderBottomColor: '#fff',
                         paddingVertical: 5,
                         marginRight: 10,
+                        marginBottom: -45,
                     }}
                 />
             ) : (
-                <Text style = {{ color: '#fff', fontSize: 30, fontWeight: 'bold', flex: 1}}>Chat</Text> // chat header
+                <Text style = {{ color: '#fff', fontSize: 30, fontWeight: 'bold', flex: 1, marginBottom: -55, marginLeft: 150}}>Chat</Text> // chat header
             )}
 
             <TouchableOpacity 
@@ -48,7 +49,7 @@ export default function ChatHeader({searchText, setSearchText} : ChatHeaderProps
                     if (isSearching) setSearchText('');
                     setIsSearching(!isSearching);
                 }}
-                style = {{ paddingHorizontal: 10}}
+                style = {{ paddingHorizontal: 10, marginBottom: -45}}
             >
                 <FontAwesome name={isSearching ? 'times' : 'search'} size={28} color='white' />  {/* display search icon, when search, display x  */}
             </TouchableOpacity>
