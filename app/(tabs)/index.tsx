@@ -139,11 +139,11 @@ export default function Events() {
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>Add New Event</Text>
 
-            <TextInput style={styles.input} placeholder="Event Name" value={eventName} onChangeText={setEventName} />
-            <TextInput style={styles.input} placeholder="Description" value={eventDescription} onChangeText={setEventDescription} />
-            <TextInput style={styles.input} placeholder="Date" value={eventDate} onChangeText={setEventDate} />
-            <TextInput style={styles.input} placeholder="Time" value={eventTime} onChangeText={setEventTime} />
-            <TextInput style={styles.input} placeholder="Image URL" value={eventImageLink} onChangeText={setEventImageLink} />
+            <TextInput style={styles.input} placeholderTextColor = "grey" placeholder="Event Name" value={eventName} onChangeText={setEventName} />
+            <TextInput style={styles.input} placeholderTextColor = "grey" placeholder="Description" value={eventDescription} onChangeText={setEventDescription} />
+            <TextInput style={styles.input} placeholderTextColor = "grey" placeholder="Date" value={eventDate} onChangeText={setEventDate} />
+            <TextInput style={styles.input} placeholderTextColor = "grey" placeholder="Time" value={eventTime} onChangeText={setEventTime} />
+            <TextInput style={styles.input} placeholderTextColor = "grey" placeholder="Image URL" value={eventImageLink} onChangeText={setEventImageLink} />
 
             <View style={styles.modalButtonContainer}>
               <Button title="Add Event" onPress={handleAddEvent} />
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: { 
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center',
