@@ -16,10 +16,11 @@ export default function ChatHeader({searchText, setSearchText} : ChatHeaderProps
             alignItems: 'center',
             backgroundColor: '#000',
             paddingHorizontal: 15,
+            paddingVertical: 10,
             borderTopWidth: 0,
-            height: 102,
+            height: 63,
             width: '100%',
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
         }}>
             {isSearching ? ( // if currently searching, display these
                 <TextInput
@@ -36,11 +37,10 @@ export default function ChatHeader({searchText, setSearchText} : ChatHeaderProps
                         borderBottomColor: '#fff',
                         paddingVertical: 5,
                         marginRight: 10,
-                        marginBottom: -30
                     }}
                 />
             ) : (
-                <Text style = {{ color: '#fff', fontSize: 30, fontWeight: 'bold', flex: 1, marginBottom: -55, textAlign: 'center', marginLeft: 30}}>Chat</Text> // chat header
+                <Text style = {{ color: '#fff', fontSize: 30, fontWeight: 'bold', flex: 1}}>Chat</Text> // chat header
             )}
 
             <TouchableOpacity 
@@ -48,7 +48,7 @@ export default function ChatHeader({searchText, setSearchText} : ChatHeaderProps
                     if (isSearching) setSearchText('');
                     setIsSearching(!isSearching);
                 }}
-                style = {{ paddingHorizontal: 10, marginBottom: -45,}}
+                style = {{ paddingHorizontal: 10}}
             >
                 <FontAwesome name={isSearching ? 'times' : 'search'} size={28} color='white' />  {/* display search icon, when search, display x  */}
             </TouchableOpacity>

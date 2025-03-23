@@ -112,12 +112,11 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
   }) => {
 
     // have messages as always an array
+  const messagesArray = Array.isArray(Chat.message)
+      ? Chat.message
+      : Chat.message 
+      ? [{ id: Date.now(), sender: "You", text: Chat.message, time: Chat.time }] : [];
 
-    const messagesArray = Array.isArray(Chat.message)
-    ? Chat.message
-    : Chat.message 
-      ? [{ id: Date.now(), sender: Chat.name, text: Chat.message, time: Chat.time }] 
-      : [];
 
     router.push({
       pathname: "/chatRoom",
