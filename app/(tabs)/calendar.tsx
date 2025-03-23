@@ -21,8 +21,24 @@ export default function Tab() {
     }));
   };
 
+  type Event = {
+    name: string;
+    club: string;
+    date: string;
+  };
+
+  const [events, setEvents] = useState<Event[]>([
+    { name: "Demo Day", club: "Oasis", date: "3/23/2025"},
+    { name: "Cheese", club: "Cheese Club", date: "03/27/2025"},
+    { name: "Open Mic Night", club: "N/A", date: "03/27/2025"},
+    { name: "Mont Tremblant", club: "Downhillers", date: "03/28/2025"},
+    { name: "Game Night Madness", club: "Board Game Club", date: "04/05/2025"},
+    { name: "Tech Conference", club: "Tech", date: "04/12/2025"},
+  ]);
+
+
   //<Button title="Add Events To Calendar!" onPress={() => addUserEventsToCalendar(user.id)} />
-const [events] = useState<string[]>(['Tech Conference', 'Art Showcase', 'Marathon']);
+
 
 
 
@@ -123,14 +139,12 @@ return isAuthenticated ? (
               <Text style={styles.eventColumn}>Event Name</Text>
               <Text style={styles.eventColumn}>Club</Text>
               <Text style={styles.eventColumn}>Date</Text>
-              <Text style={styles.eventColumn}>Days Till</Text>
             </View>
-            {Array.isArray(events) ? events.map((event, index) => (
+            {Array.isArray(events) ? events.map((event: Event, index) => (
               <View key={index} style={styles.eventRow}>
                 <Text style={styles.eventColumn}>{event.name || "N/A"}</Text>
                 <Text style={styles.eventColumn}>{event.club || "N/A"}</Text>
                 <Text style={styles.eventColumn}>{event.date || "N/A"}</Text>
-                <Text style={styles.eventColumn}>{event.daysTill !== undefined ? event.daysTill : "N/A"}</Text>
               </View>
             )) : null}
           </View>
