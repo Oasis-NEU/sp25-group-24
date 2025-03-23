@@ -146,7 +146,13 @@ export default function Chat(): JSX.Element { // export this chat page, also Cha
             name={item.name} 
             // if item.message is an array it takes the last message to display (per message card's command)
             // if item.message is a string, it simply display it on the screen
-            message={Array.isArray(item.message) ? item.message[item.message.length - 1]?.text : item.message || ""} // Ensure message is never an empty string
+            message={
+              Array.isArray(item.message) && item.message.length > 0
+                ? item.message[item.message.length - 1]?.text || ""
+                : typeof item.message === 'string'
+                  ? item.message
+                  : ""
+            } // Ensure message is never an empty string
             image={item.image} 
             time={item.time} 
             count={item.messageCount}
