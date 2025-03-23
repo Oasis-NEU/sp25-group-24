@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, TextInput, Button, FlatList } from 'react-native';
 import { useSupabaseAuth } from '../../hooks/useSupabaseAuth';
 import Auth from '@/components/Auth';
+import { supabase } from '@/supabase';
 
 const Profile: React.FC = () => {
   const { user, loading, isAuthenticated } = useSupabaseAuth();
@@ -283,17 +284,39 @@ const Profile: React.FC = () => {
           </View>
         )}
       </View>
+        <TouchableOpacity
+         style={ styles.signout }
+                      onPress={signOut}
+                    ><Text style = {{color: "white", fontSize: 17, fontWeight: 'bold'}}>Sign Out</Text></TouchableOpacity>
     </ScrollView>
+    
   ) : (
+    
     <Auth />
   );
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+  }
 };
 
+
 const styles = StyleSheet.create({
+  
   container: {
     flexGrow: 1,
     backgroundColor:'rgb(247, 121, 121)',
     padding: 20,
+  },
+  signout: {
+    height: 50,
+    width: 100, 
+    backgroundColor: 'black', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    borderRadius: 50,
+    position: 'absolute',
+    bottom: 20, // Distance from the bottom
+    left: '5%',
   },
   profileHeader: {
     flexDirection: 'row',
