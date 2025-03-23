@@ -40,36 +40,6 @@ const [events] = useState<string[]>(['Tech Conference', 'Art Showcase', 'Maratho
 
 
 
-  return isAuthenticated ? (
-    <ScrollView contentContainerStyle={styles.container}>
-
-        <View style={styles.container}>
-      <Text>Go to your calander app to see when your events are!</Text>
-      <Button title="Create a new calendar" onPress={createCalendar} />
-    </View>
-
-      {/* Events Dropdown */}
-      <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection('events')} style={styles.dropdownHeader}>
-          <Text style={styles.sectionTitle}>Upcoming Events</Text>
-        </TouchableOpacity>
-        {expanded.events && (
-          <View style={styles.dropdownContent}>
-            {events.map((event, index) => (
-              <Text key={index} style={styles.listItem}>{event}</Text>
-            ))}
-          </View>
-        )}
-      </View>
-
-          </ScrollView>
-
-  ) : (
-        <Auth />
-      );
-};
-
-
 
 async function getUserEvents(id: number) {
     const{data, error} = await supabase
@@ -136,26 +106,85 @@ async function addUserEventsToCalendar(user_id: number) {
   }) }; 
 
   Alert.alert('Success', 'Event added to the calendar!');
-}
+}  
+
+return isAuthenticated ? (
+  <ScrollView contentContainerStyle={styles.container}>
+
+    {/* Events Dropdown */}
+    <View style={styles.section}>
+      <TouchableOpacity onPress={() => toggleSection('events')} style={styles.dropdownHeader}>
+        <Text style={styles.sectionTitle}>Upcoming Events</Text>
+      </TouchableOpacity>
+      {expanded.events && (
+        <View style={styles.dropdownContent}>
+          <View style={styles.eventTable}>
+            <View style={styles.eventRowHeader}>
+              <Text style={styles.eventColumn}>Event Name</Text>
+              <Text style={styles.eventColumn}>Club</Text>
+              <Text style={styles.eventColumn}>Date</Text>
+              <Text style={styles.eventColumn}>Days Till</Text>
+            </View>
+            {Array.isArray(events) ? events.map((event, index) => (
+              <View key={index} style={styles.eventRow}>
+                <Text style={styles.eventColumn}>{event.name || "N/A"}</Text>
+                <Text style={styles.eventColumn}>{event.club || "N/A"}</Text>
+                <Text style={styles.eventColumn}>{event.date || "N/A"}</Text>
+                <Text style={styles.eventColumn}>{event.daysTill !== undefined ? event.daysTill : "N/A"}</Text>
+              </View>
+            )) : null}
+          </View>
+        </View>
+      )}
+    </View>
+
+    <View style={styles.container}>
+    <Button title="Create a new calendar" onPress={createCalendar} color={'white'}/>
+  </View>
+
+        </ScrollView>
+
+) : (
+      <Auth />
+    );
+};
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(247, 121, 121)',
     alignItems: 'center',
     justifyContent: 'space-around',
+    padding: 10,
+  },
+  text: {
+    marginBottom: 5,
+    textAlign: 'center',
+    color: '#cc0000'
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 14,
   },
   dropdownHeader: {
-    backgroundColor: '#ff6b6b',
+    backgroundColor: '#cc0000',
     padding: 10,
     borderRadius: 8,
+    width: 350,
+    alignItems: 'center',
+    borderWidth: 3,
+    borderColor: '#000',
   },
   dropdownContent: {
-    padding: 10,
-    backgroundColor: '#ffdada',
+    padding: 20,
+    backgroundColor: '#fff',
     borderRadius: 5,
     marginTop: 5,
+    maxHeight: 400, // Adjust the height as needed
+    color: '#cc0000',
+    borderWidth: 3,
+    borderColor: '#000',
   },
   listItem: {
     fontSize: 16,
@@ -168,6 +197,27 @@ const styles = StyleSheet.create({
   },
   section: {
     marginBottom: 15,
+  },
+  eventTable: {
+    width: '100%',
+  },
+  eventRowHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    paddingBottom: 5,
+    marginBottom: 5,
+  },
+  eventRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+  },
+  eventColumn: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: 16, // Increase font size for better readability
+    color: '#cc0000'
   },
 });
 
