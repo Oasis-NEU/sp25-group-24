@@ -340,7 +340,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     borderWidth: 3,
-    borderColor: '#000'
+    borderColor: '#000',
+    alignItems: 'center',
   },
   splitHeader: {
     flexDirection: 'row',
