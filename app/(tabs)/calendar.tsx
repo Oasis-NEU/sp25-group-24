@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { StyleSheet, View, Text, Button, Platform, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Button, Platform, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import * as Calendar from 'expo-calendar';
 import { supabase } from '@/supabase';
 import { useSupabaseAuth } from '../../hooks/useSupabaseAuth';
@@ -8,6 +9,23 @@ import Auth from '@/components/Auth';
 export default function Tab() {
 
   const { user, loading, isAuthenticated } = useSupabaseAuth();
+
+  const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({
+      events: false,
+    });
+  
+  const toggleSection = (section: string) => {
+    setExpanded((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  //<Button title="Add Events To Calendar!" onPress={() => addUserEventsToCalendar(user.id)} />
+const [events] = useState<string[]>(['Tech Conference', 'Art Showcase', 'Marathon']);
+
+
+
 
   useEffect(() => {
     (async () => {
@@ -21,16 +39,37 @@ export default function Tab() {
   }, []);
 
 
+
   return isAuthenticated ? (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
+
+        <View style={styles.container}>
       <Text>Go to your calander app to see when your events are!</Text>
-      
       <Button title="Create a new calendar" onPress={createCalendar} />
     </View>
+
+      {/* Events Dropdown */}
+      <View style={styles.section}>
+        <TouchableOpacity onPress={() => toggleSection('events')} style={styles.dropdownHeader}>
+          <Text style={styles.sectionTitle}>Upcoming Events</Text>
+        </TouchableOpacity>
+        {expanded.events && (
+          <View style={styles.dropdownContent}>
+            {events.map((event, index) => (
+              <Text key={index} style={styles.listItem}>{event}</Text>
+            ))}
+          </View>
+        )}
+      </View>
+
+          </ScrollView>
+
   ) : (
-      <Auth />
-    );
-}
+        <Auth />
+      );
+};
+
+
 
 async function getUserEvents(id: number) {
     const{data, error} = await supabase
@@ -106,6 +145,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  dropdownHeader: {
+    backgroundColor: '#ff6b6b',
+    padding: 10,
+    borderRadius: 8,
+  },
+  dropdownContent: {
+    padding: 10,
+    backgroundColor: '#ffdada',
+    borderRadius: 5,
+    marginTop: 5,
+  },
+  listItem: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  section: {
+    marginBottom: 15,
   },
 });
 
